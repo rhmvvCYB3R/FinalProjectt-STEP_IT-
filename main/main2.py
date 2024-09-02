@@ -107,12 +107,6 @@ def user_acc_frame():
     user_frame.place(x=0, y=0)
 
 
-#___________Admin__ACCOUNT____FRAME_____
-def admin_frame():
-    admin_frame = Frame(mystat, width=1270, height=750, bg="#FFFFFF")
-    admin_frame.place(x=0, y=0)
-
-
 
 
 #______________REGISTARTION FRAME
@@ -338,6 +332,26 @@ def main_view():
     apple_store_button.place(x=270, y=550)
     apple_store_button.image = apple_store
     #__________________________________________________________________
+
+
+
+
+#___________Admin__ACCOUNT____FRAME_____
+def admin_frame():
+    admin_frame = Frame(mystat, width=1270, height=750, bg="#FFFFFF")
+    admin_frame.place(x=0, y=0)
+    mystat_text = Label(admin_frame, text='MyStat')
+    mystat_text.config(bg='#FFFFFF',
+                        fg='#563bea',
+                    font= ("Arial Black" , 14))
+    mystat_text.place(x=20,y=20)
+
+    quit_btn =Image.open("files/exitbtn.png")
+    resized_quit_btn_in = quit_btn.resize((35, 35))
+    quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
+    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#fafafa',command=main_view )
+    quit_btn_in_btn.place(x=1220,y=15)
+    quit_btn_in_btn.image = quit_btn_in
 
 main_view()
 mystat.mainloop()
