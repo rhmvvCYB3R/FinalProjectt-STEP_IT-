@@ -1,7 +1,96 @@
 from tkinter import *
 from PIL import Image, ImageTk #чтобы можно было добавить фотки
 import webbrowser #добавил чтобы мог управлять ссылками
+from tkinter import messagebox
 
+adminka = {"admin":"admin"}
+usernew_acc = {}
+
+class Schedule:
+    def __init__(self, time, subject, group, room, count_student):
+        self.time = time
+        self.subject = subject
+        self.group = group
+        self.room = room
+        self.count_student = count_student
+    def __str__(self):
+        
+        return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студента -- {self.count_student}")
+
+list_schedule = [
+    Schedule("10:00","Python","12a", "6", "13"),
+    Schedule("12:00","Cybersecurity", "10b","5","15"),
+    Schedule("14:00","DevOps","11e","3",'10')
+    
+]    
+
+class Administrator:
+    
+
+    def add_schedule():
+        print("\t\t\tДобавление расписания!")
+        time = input("Введите время -- ")
+        subject = input("Введите название предмета -- ")
+        group = input("Введите название группы-- ")
+        room = input("Введите номер кабинета -- ")
+        count_student = input("Введите колл-во студентов -- ")
+        adder = Schedule(time,subject,group,room,count_student)
+        list_schedule.append(adder)
+        print("\nУспешно добавлено!")
+
+        
+
+    # def remove_schedule():
+    #     print("\t\t\tУдаление расписания!")
+    #     subject = input("Введите название предмета -- ")
+    #     global list_schedule
+    #     found = False
+    #     for i in list_schedule:
+    #         if i.subject == subject:
+    #             list_schedule.remove(i)
+    #             print(f"\n{subject} -- Удалено!")
+    #             found = True
+    #             break
+    #     if not found:
+    #         print(f"\n{subject} -- Не найдено")
+           
+               
+            
+                
+    # def change_room():
+    #     print("\t\t\tИзменить кабинет по времени")
+    #     time = input("\nВведите время урока, чтобы найти кабинет --  ")
+    #     change_room = input("Введите новый номер кабинета -- ")
+    #     for schedule in list_schedule:
+    #         if schedule.time == time:
+    #             schedule.room = change_room
+    #             print(f"\nКабинет успешно поменян на {change_room}")
+    #             print("__________________________")
+    #             print(schedule)
+    #             return
+    #     print(f"\nНе \nнайден время предмета -- {time} ")
+
+    # def search_by_time():
+    #     print("\t\t\tПоиск расписания по времени")
+    #     search_time = input("\nВведите время для поиска расписания -- ")
+    #     found = False
+    #     for schedule in list_schedule:
+    #         if schedule.time == search_time:
+    #             print(schedule)
+    #             found = True
+    #     if not found:
+    #         print(f"\nРасписание на {search_time} не найдено")
+
+    
+
+    # def show_schedule2():
+    #     for i in list_schedule:
+    #         print("__________________________")
+    #         print(i)
+
+    # def logout():
+    #     input = "Нажмите на что то, чтобы выйти  -- "
+    #     main()
 
 
 
@@ -11,6 +100,19 @@ mystat.geometry("1270x750+140+20")
 mystat.resizable(False,False)
 mystat.iconbitmap("files/logo.ico")
 mystat.config(background="#FFFFFF")
+
+#user_ACC_FRAME_____________
+def user_acc_frame():
+    user_frame = Frame(mystat, width=1270, height=750, bg="#FFFFFF")
+    user_frame.place(x=0, y=0)
+
+
+#___________Admin__ACCOUNT____FRAME_____
+def admin_frame():
+    admin_frame = Frame(mystat, width=1270, height=750, bg="#FFFFFF")
+    admin_frame.place(x=0, y=0)
+
+
 
 
 #______________REGISTARTION FRAME
@@ -43,6 +145,11 @@ def registration_menu():
                     fg='#0000FF',
                 font= ("Arial Black" , 18))
     register_text.place(x=35,y=30)
+    
+
+
+
+
 
     newlogin = Entry(mystat, validate="key",bd=0.5,justify="left", fg= "black")
     newlogin.config(
@@ -70,12 +177,30 @@ def registration_menu():
     new_gmail.insert(0,"Введите E-mail*: ")
     new_gmail.place(x=50, y= 230,height=30,width=280)
     new_gmail.bind("<FocusIn>", clear_newemail)
+    #Create_Acc_____________________
+    def register_user():
+        global usernew_acc
+        username = newlogin.get()
+        password = newpass_input.get()
+        email = new_gmail.get()
+        
+        if username in ["", "Введите логин*: "] or password in ["", "Введите пароль*: "] or email in ["", "Введите E-mail*: "]:
+            messagebox.showerror("Ошибка", "Введите данные!")
+            return
+        usernew_acc = {username:password,
+                      email:password
+                                         }
+        
+        messagebox.showinfo("Успех", "Вы успешно зарегистрированы!")
+        print(usernew_acc)
+
 
     sign_up_fon = Image.open("files/sign_up.png")
     resized_sign_up = sign_up_fon.resize((300, 60))
     sign_up = ImageTk.PhotoImage(resized_sign_up)
     sign_up_btn = Button(mystat_reg, image=sign_up, bd=0, bg='#FFFFFF')
     sign_up_btn.image = sign_up # Сохраняем ссылку на изображение чтобы сборщик мусора не удалял!
+    sign_up_btn.config(command=register_user)
     sign_up_btn.place(x=45, y=280)
 
     go_back_fon = Image.open("files/go_back1.png")
@@ -158,6 +283,21 @@ def main_view():
     password_input.bind("<FocusIn>", clear_password)
     #___________________________________________________
 
+    def admin_log_pass_check():
+        global adminka
+        global usernew_acc
+        login = name_input.get()
+        password = password_input.get()
+        if login in adminka and adminka[login] == password:
+            admin_frame()  # Открываем админ фрейм
+        elif login in usernew_acc and usernew_acc[login] == password: #["Пароль"] - извлекает значение по ключу "Пароль" из словаря
+            user_acc_frame() #открываем юзер фрейм
+       
+        else:
+            messagebox.showerror("Ошибка", "Неверный логин или пароль!")
+        
+
+    
     #_____________Кнопка для создания нового аккаунта!
     create_acc_btn = Button(main, text='Нет аккаунта?',bd=0,command=registration_menu)
     create_acc_btn.config(bg='#fafafa',
@@ -165,16 +305,11 @@ def main_view():
                     font= ("Ubuntu" , 11))
     create_acc_btn.place(x=295,y=345)
     #______________________
-    def info():
-        login = name_input.get()
-        passw = password_input.get()
-        print(login,passw)
-
     #_________________Кнопка для входа
     sign =Image.open("files/singin_button.png")
     resized_sign_in = sign.resize((290, 45))
     sign_in = ImageTk.PhotoImage(resized_sign_in)
-    sign_in_btn = Button(main, image=sign_in, bd=0, bg = '#fafafa', command=info )
+    sign_in_btn = Button(main, image=sign_in, bd=0, bg = '#fafafa', command=admin_log_pass_check )
     sign_in_btn.place(x=110,y=390)
     sign_in_btn.image = sign_in
 
@@ -199,7 +334,6 @@ def main_view():
     apple_store_button.place(x=270, y=550)
     apple_store_button.image = apple_store
     #__________________________________________________________________
-   
 
 main_view()
 mystat.mainloop()
