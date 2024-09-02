@@ -187,6 +187,10 @@ def registration_menu():
         if username in ["", "Введите логин*: "] or password in ["", "Введите пароль*: "] or email in ["", "Введите E-mail*: "]:
             messagebox.showerror("Ошибка", "Введите данные!")
             return
+        if len(password) < 8:
+            messagebox.showerror("Ошибка", "Пароль должен содержать больше 8-ми символов!")
+            return
+        
         usernew_acc = {username:password,
                       email:password
                                          }
