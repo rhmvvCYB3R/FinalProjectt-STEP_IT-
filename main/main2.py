@@ -66,21 +66,44 @@ mystat.config(background="#FFFFFF")
 
 #____________user_ACC_FRAME_____________
 def user_acc_frame():
-    user_frame = Frame(mystat, width=1270, height=750, bg="#FFFFFF")
+    user_frame = Frame(mystat, width=1270, height=750, bg="#DCDCDC")
     user_frame.place(x=0, y=0)
 
 
 
 #___________Admin__ACCOUNT____FRAME_____
 def admin_frame():
-    admin_frame = Frame(mystat, width=1270, height=750, bg="#FFFFFF")
+    admin_frame = Frame(mystat, width=1270, height=750, bg="#DCDCDC")
     admin_frame.place(x=0, y=0)
-    mystat_text = Label(admin_frame, text='MyStat')
-    mystat_text.config(bg='#FFFFFF',
-                        fg='#563bea',
-                    font= ("Arial Black" , 14))
-    mystat_text.place(x=20,y=20)
 
+    design1 = Label(admin_frame)
+    design1.config(bg='#D3D3D3',padx=700,pady=20)
+    design1.place(x=0,y=0)
+
+    design2 = Label(admin_frame)
+    design2.config(bg='#D3D3D3',padx=30,pady=500)
+    design2.place(x=0,y=0)
+
+
+    admin_text = Label(admin_frame, text='admin')
+    admin_text.config(bg='#D3D3D3',
+                        fg='#563bea',
+                    font= ("Ubuntu" , 12),bd=0)
+    admin_text.place(x=85,y=30)
+
+
+    mystat_text = Label(admin_frame, text='MyStat')
+    mystat_text.config(bg='#D3D3D3',
+                        fg='#563bea',
+                    font= ("Arial Black" , 14),bd=0)
+    mystat_text.place(x=75,y=4)
+
+    step_logo =Image.open("files/step_logo.png")
+    resized_step_logo_in = step_logo.resize((55, 55))
+    step_logo_in = ImageTk.PhotoImage(resized_step_logo_in)
+    step_logo_in_btn = Label(admin_frame, image=step_logo_in, bd=0, bg = '#D3D3D3' )
+    step_logo_in_btn.place(x=8,y=10)
+    step_logo_in_btn.image = step_logo_in# Сохраняем ссылку на изображение
     
 
     def go_back_btn_funk():
@@ -92,8 +115,8 @@ def admin_frame():
     quit_btn =Image.open("files/exitbtn.png")
     resized_quit_btn_in = quit_btn.resize((35, 35))
     quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
-    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#fafafa',command=go_back_btn_funk )
-    quit_btn_in_btn.place(x=1220,y=15)
+    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
+    quit_btn_in_btn.place(x=1220,y=8)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
 
 
