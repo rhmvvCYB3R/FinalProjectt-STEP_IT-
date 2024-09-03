@@ -98,13 +98,19 @@ def admin_frame():
                     font= ("Arial Black" , 14),bd=0)
     mystat_text.place(x=75,y=4)
 
-    step_logo =Image.open("files/step_logo.png")
-    resized_step_logo_in = step_logo.resize((55, 55))
+    step_logo =Image.open("files/step_logo2.png")
+    resized_step_logo_in = step_logo.resize((65, 75))
     step_logo_in = ImageTk.PhotoImage(resized_step_logo_in)
-    step_logo_in_btn = Label(admin_frame, image=step_logo_in, bd=0, bg = '#D3D3D3' )
-    step_logo_in_btn.place(x=8,y=10)
-    step_logo_in_btn.image = step_logo_in# Сохраняем ссылку на изображение
+    step_logo_in_bg = Label(admin_frame, image=step_logo_in, bd=0, bg = '#D3D3D3' )
+    step_logo_in_bg.place(x=0,y=0)
+    step_logo_in_bg.image = step_logo_in# Сохраняем ссылку на изображение
     
+    admin_logo =Image.open("files/admin_anonim.png")
+    resized_admin_logo_in = admin_logo.resize((55, 55))
+    admin_logo_in = ImageTk.PhotoImage(resized_admin_logo_in)
+    admin_logo_in_bg = Label(admin_frame, image=admin_logo_in, bd=0, bg = '#D3D3D3' )
+    admin_logo_in_bg.place(x=5,y=85)
+    admin_logo_in_bg.image = admin_logo_in# Сохраняем ссылку на изображение
 
     def go_back_btn_funk():
         options = messagebox.askquestion("Уже выходишь(?","Ты уверерн что хочешь выйти из аккаунта ??", )
