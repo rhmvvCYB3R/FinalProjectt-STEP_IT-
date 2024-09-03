@@ -10,12 +10,12 @@ class Users:
         self.password = password
         self.email = email
 
-    def __str__(self):
+    def __str__(self): #Сам не понял для чего я это создал!, но пусть пока остаётся
         return f'''
 ______________________________
 
 Имя - {self.name}
-Пароль - {self.password}
+Пароль - {self.password}            
 Э-почта - {self.email}
 __________________________
 
@@ -81,12 +81,20 @@ def admin_frame():
                     font= ("Arial Black" , 14))
     mystat_text.place(x=20,y=20)
 
+    
+
+    def go_back_btn_funk():
+        options = messagebox.askquestion("Уже выходишь(?","Ты уверерн что хочешь выйти из аккаунта ??", )
+        if options == 'yes':
+            main_view()
+
+
     quit_btn =Image.open("files/exitbtn.png")
     resized_quit_btn_in = quit_btn.resize((35, 35))
     quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
-    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#fafafa',command=main_view )
+    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#fafafa',command=go_back_btn_funk )
     quit_btn_in_btn.place(x=1220,y=15)
-    quit_btn_in_btn.image = quit_btn_in
+    quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
 
 
 
@@ -164,6 +172,9 @@ def registration_menu():
     sign_up_btn.config(command=register)
     sign_up_btn.place(x=45, y=280)
 
+    
+    
+
     go_back_fon = Image.open("files/go_back1.png")
     resized_go_back = go_back_fon.resize((160, 60))
     go_back = ImageTk.PhotoImage(resized_go_back)
@@ -217,6 +228,9 @@ def main_view():
     #когда функция привязана к событию через метод bind. Он содержит информацию о событии (например, какой виджет вызвал событие).
     #_______________________________________
 
+
+
+
     #___________Ввод логин
     name_input = Entry(main, validate="key",bd=0.5,justify="left", fg= "black")
     name_input.config(
@@ -267,7 +281,7 @@ def main_view():
     sign_in = ImageTk.PhotoImage(resized_sign_in)
     sign_in_btn = Button(main, image=sign_in, bd=0, bg = '#fafafa', command=log_pass_check)
     sign_in_btn.place(x=110,y=390)
-    sign_in_btn.image = sign_in
+    sign_in_btn.image = sign_in# Сохраняем ссылку на изображение
 
     #___ФОТКИ КАК КНОПКИИ_______________
     def open_google_play():
@@ -281,14 +295,14 @@ def main_view():
     google_play = ImageTk.PhotoImage(resized_google)
     google_play_button = Button(main, image=google_play, bd=0, command=open_google_play, bg = '#fafafa')
     google_play_button.place(x=115, y=550)
-    google_play_button.image = google_play
+    google_play_button.image = google_play# Сохраняем ссылку на изображение
 
     apple = Image.open("files/Appstore_logo.png")
     resized_apple = apple.resize((135, 45))
     apple_store = ImageTk.PhotoImage(resized_apple)
     apple_store_button = Button(main, image=apple_store, bd=0, command=open_apple_store,bg = '#fafafa')
     apple_store_button.place(x=270, y=550)
-    apple_store_button.image = apple_store
+    apple_store_button.image = apple_store# Сохраняем ссылку на изображение
     #_______________Main___VIEW____END________________________________________
 
 
