@@ -14,9 +14,7 @@ class Schedule:
     def __str__(self):
          return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}\n")
 
-list_schedule = [
-
-]    
+ 
 
 class Admin:
     def __init__(self,show,add,remove,edit,save):
@@ -142,21 +140,31 @@ def admin_frame_win():
          
          #SHOW_BUTTON_AND_FUNK______
         def show_btn_funk():
-            pass
-
-
-        show_btn = Button(admin_frame, text="Показать")
+            add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
+            add_frame.place(x=67, y=120)
+            
+            schedules_listbox = Listbox(add_frame, font=("Arial Bond", 13), bg="#837da2", fg="black")
+            schedules_listbox.place(x=50, y=50, width=1100, height=450)
+            
+            with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+                data = file.readlines()
+            
+            for datas in data:
+                schedules_listbox.insert(END, datas.strip())
+        show_btn = Button(admin_frame, text="Показать",command=show_btn_funk)
         show_btn.config(padx=15,pady=14)
         show_btn.place(x=80,y=65)
 
 
         #_________END___________________
     
+
+
         #ADD_BUTTON_AND_FUNK______
         def add_btn_frame():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             add_frame.place(x=67, y=120)
-
+            #______________ENTRIES_________________
             time_add = Entry(add_frame)
             time_add.config(font=("Arial Bond",14))
             time_add.place(x=50,y=50,height=35,width=220)
@@ -176,10 +184,7 @@ def admin_frame_win():
             count_stn_add = Entry(add_frame)
             count_stn_add.config(font=("Arial Bond",14))
             count_stn_add.place(x=50,y=250,height=35,width=220)
-
-
-
-
+            #______________TEXT_LABELS______________________________-
             time_add_text = Label(add_frame, text="--Время урока")
             time_add_text.config(font=("Arial Bond",14),bg="#694185")
             time_add_text.place(x=300,y=50)
@@ -229,6 +234,8 @@ def admin_frame_win():
 
         #_________END___________________
 
+
+
         #DELETE_BUTTON_AND_FUNK______
         def delete_btn_funk():
             pass
@@ -260,9 +267,9 @@ def admin_frame_win():
 
         #SAVE_BUTTON_AND_FUNK______
 
-        def save_btn_funk():   
-            pass
 
+        def find_btn_funk():   
+            pass
 
 
         find_btn = Button(admin_frame, text="Поиск")
@@ -358,7 +365,7 @@ def registration_menu():
     def clear_newpass(event):        
         if newpass_input.get() == "Введите пароль*: ":
             newpass_input.delete(0, "end")
-            newpass_input.config(fg="black")
+            newpass_input.config(fg="black",show="*")
     def clear_newemail(event):    
         if new_gmail.get() == "Введите E-mail*: ":
             new_gmail.delete(0, "end")
@@ -383,10 +390,28 @@ def registration_menu():
     newpass_input.config(
                 bg="#FFFFFF",
                 fg="grey",
-                font= ("Times" , 12), )
-    newpass_input.insert(0,"Введите пароль*: ")
+                font= ("Times" , 12))
+    newpass_input.insert(0,"Введите пароль*: ") 
     newpass_input.place(x=50, y= 180,height=30,width=280)
     newpass_input.bind("<FocusIn>", clear_newpass)
+
+    passw_show = IntVar()
+    def show_password_funk():
+        if passw_show.get() == 1:
+            newpass_input.config(show="")
+        else:
+            newpass_input.config(show="*")
+
+
+    password_show_btn = Image.open("files/password_show.png")
+    resized_password_show_btn = password_show_btn.resize((20, 15))
+    password_show_btn = ImageTk.PhotoImage(resized_password_show_btn)
+    password_show_btn_button = Checkbutton(mystat, image=password_show_btn, bd=0, command=show_password_funk, variable= passw_show, bg = '#FFFFFF')
+    password_show_btn_button.place(x=310, y=187)
+    password_show_btn_button.image = password_show_btn# Сохраняем ссылку на изображение
+
+
+
 
     new_gmail = Entry(mystat, validate="key",bd=0.5,justify="left", fg= "black")
     new_gmail.config(
@@ -464,7 +489,7 @@ def main_view():
     def clear_password(event):
         if password_input.get() == "Пароль*: ":
             password_input.delete(0, "end")
-            password_input.config(fg="black")
+            password_input.config(fg="black",show="*")
     #event: Параметр event передается автоматически, 
     #когда функция привязана к событию через метод bind. Он содержит информацию о событии (например, какой виджет вызвал событие).
     #_______________________________________
@@ -496,6 +521,20 @@ def main_view():
     password_input.insert(0,"Пароль*: ")
     password_input.place(x=115, y= 310,height=30,width=280)
     password_input.bind("<FocusIn>", clear_password)
+
+    passw_show2 = IntVar()
+    def show_password_funk2():
+        if passw_show2.get() == 1:
+            password_input.config(show="")
+        else:
+            password_input.config(show="*")
+
+    password_show_btn2 = Image.open("files/password_show.png")
+    resized_password_show_btn2 = password_show_btn2.resize((20, 15))
+    password_show_btn2 = ImageTk.PhotoImage(resized_password_show_btn2)
+    password_show_btn2_button = Checkbutton(mystat, image=password_show_btn2, bd=0, command=show_password_funk2, variable= passw_show2, bg = '#FFFFFF')
+    password_show_btn2_button.place(x=378, y=317)
+    password_show_btn2_button.image = password_show_btn2# Сохраняем ссылку на изображение
     #___________________________________________________
 
 
