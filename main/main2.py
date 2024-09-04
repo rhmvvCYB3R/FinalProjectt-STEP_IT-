@@ -208,14 +208,13 @@ def admin_frame_win():
                 room = room_add.get()
                 count_student = count_stn_add.get()
                 adder = Schedule(time,subject,group,room,count_student)
-                list_schedule.append(adder)
                 path = "data/StudentSchedule.txt"
                 with open(path, "a", encoding="utf=8") as file:
                     for spisok in list_schedule:
-                        file.write("\n____________________")
-                        file.write(str(spisok))
+                        file.write("\n___________________")
+                        file.write(str(adder))
         
-                    messagebox.showinfo("Успех","Записано")
+                messagebox.showinfo("Успех","Записано")
 
             schedule_add = Button(add_frame, text="Добавить",command=create_schedule)
             schedule_add.config(padx=15,pady=14)
