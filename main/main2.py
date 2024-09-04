@@ -11,11 +11,12 @@ class Schedule:
         self.group = group
         self.room = room
         self.count_student = count_student
+    def __str__(self):
+         return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}")
 
-    def schedule_create(self):
-        with open("data/Created_Schedule.txt", 'a') as file:
-            file.write(f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
-            messagebox.showinfo("Успех","Вы успешно создали расписание!")
+list_schedule = [
+
+]    
 
 class Admin:
     def __init__(self,show,add,remove,edit,save):
@@ -162,19 +163,22 @@ def admin_frame_win():
 
             subject_add = Entry(add_frame)
             subject_add.config(font=("Arial Bond",14))
-            subject_add.place(x=50,y=50,height=35,width=220)
+            subject_add.place(x=50,y=100,height=35,width=220)
            
             group_add = Entry(add_frame)
             group_add.config(font=("Arial Bond",14))
-            group_add.place(x=50,y=100,height=35,width=220)
+            group_add.place(x=50,y=150,height=35,width=220)
 
             room_add = Entry(add_frame)
             room_add.config(font=("Arial Bond",14))
-            room_add.place(x=50,y=150,height=35,width=220)
+            room_add.place(x=50,y=200,height=35,width=220)
 
             count_stn_add = Entry(add_frame)
             count_stn_add.config(font=("Arial Bond",14))
-            count_stn_add.place(x=50,y=200,height=35,width=220)
+            count_stn_add.place(x=50,y=250,height=35,width=220)
+
+
+
 
             time_add_text = Label(add_frame, text="--Время урока")
             time_add_text.config(font=("Arial Bond",14),bg="#694185")
@@ -184,27 +188,38 @@ def admin_frame_win():
             subject_add_text.config(font=("Arial Bond",14),bg="#694185")
             subject_add_text.place(x=300,y=100)
 
+            group_add_text = Label(add_frame, text="--Группа")
+            group_add_text.config(font=("Arial Bond",14),bg="#694185")
+            group_add_text.place(x=300,y=150)
+
             room_add_text = Label(add_frame, text="--Комната")
             room_add_text.config(font=("Arial Bond",14),bg="#694185")
-            room_add_text.place(x=300,y=150)
+            room_add_text.place(x=300,y=200)
 
-            time_add_text = Label(add_frame, text="--Колличество студентов")
-            time_add_text.config(font=("Arial Bond",14),bg="#694185")
-            time_add_text.place(x=300,y=200)
+            count_stn_text = Label(add_frame, text="--Колличество студентов")
+            count_stn_text.config(font=("Arial Bond",14),bg="#694185")
+            count_stn_text.place(x=300,y=250)
+            
             
             def create_schedule():
-           
                 time = time_add.get()
                 subject = subject_add.get()
                 group = group_add.get()
                 room = room_add.get()
                 count_student = count_stn_add.get()
-                schedule = Schedule(time,subject,group,room,count_student)
-                schedule.schedule_create()   
+                adder = Schedule(time,subject,group,room,count_student)
+                list_schedule.append(adder)
+                path = "data/StudentSchedule.txt"
+                with open(path, "a", encoding="utf=8") as file:
+                    for spisok in list_schedule:
+                        file.write("\n____________________")
+                        file.write(str(spisok))
+        
+                    messagebox.showinfo("Успех","Записано")
 
             schedule_add = Button(add_frame, text="Добавить",command=create_schedule)
             schedule_add.config(padx=15,pady=14)
-            schedule_add.place(x=247,y=360)
+            schedule_add.place(x=180,y=310)
             
 
 
