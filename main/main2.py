@@ -2,7 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk #чтобы можно было добавить фотки
 import webbrowser #добавил чтобы мог управлять ссылками
 from tkinter import messagebox
-users_log_dat = []
+
 
 class Users:
     def __init__(self, name, password, email):
