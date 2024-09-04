@@ -4,6 +4,10 @@ import webbrowser #добавил чтобы мог управлять ссыл�
 from tkinter import messagebox
 
 
+class Admin:
+    pass
+
+
 class Users:
     def __init__(self, name, password, email):
         self.name = name
@@ -45,10 +49,12 @@ __________________________
                 data = data.strip()#метод строки, который удаляет пробелы в начале и в конце строки.
                 user_data = data.split(",")# разделяет очищенную строку на список элементов по запятым.
                 username, user_password, email = user_data #происходит распаковка списка или кортежа на несколько переменных.
-                if login == username or login == email and password == user_password:
+                if login == username and password == user_password:
                     user_acc_frame()
                     return
-
+                elif login == email and password ==user_password:
+                    user_acc_frame()
+                    return
         if login == admin_log.username and password == admin_log.password:
             admin_frame()
         else:
@@ -66,13 +72,56 @@ mystat.config(background="#FFFFFF")
 
 #____________user_ACC_FRAME_____________
 def user_acc_frame():
+
+
+
+
+    #______________USERS_ACC_VIEWS____________________________________
     user_frame = Frame(mystat, width=1270, height=750, bg="#DCDCDC")
     user_frame.place(x=0, y=0)
+    
+    design1 = Label(user_frame)
+    design1.config(bg='#D3D3D3',padx=700,pady=20)
+    design1.place(x=0,y=0)
+
+    design2 = Label(user_frame)
+    design2.config(bg='#D3D3D3',padx=30,pady=500)
+    design2.place(x=0,y=0)
+
+    mystat_text = Label(user_frame, text='MyStat')
+    mystat_text.config(bg='#D3D3D3',
+                        fg='#563bea',
+                    font= ("Arial Black" , 15),bd=0)
+    mystat_text.place(x=30,y=14)
 
 
+    user_logo =Image.open("files/user_anonim.png")
+    resized_user_logo_in = user_logo.resize((55, 55))
+    user_logo_in = ImageTk.PhotoImage(resized_user_logo_in)
+    user_logo_in_bg = Label(user_frame, image=user_logo_in, bd=0, bg = '#D3D3D3' )
+    user_logo_in_bg.place(x=5,y=95)
+    user_logo_in_bg.image = user_logo_in
+
+    def go_back_btn_funk():
+        options = messagebox.askquestion("Уже выходишь(?","Ты точно хочешь выйти из аккаунта ??", )
+        if options == 'yes':
+            main_view()
+
+
+    quit_btn =Image.open("files/exitbtn.png")
+    resized_quit_btn_in = quit_btn.resize((35, 35))
+    quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
+    quit_btn_in_btn = Button(user_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
+    quit_btn_in_btn.place(x=1220,y=10)
+    quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
+#______________USERS_ACC_VIEWS_END________________
 
 #___________Admin__ACCOUNT____FRAME_____
 def admin_frame():
+
+
+
+    #______ADMIN_ACC_VIEWS
     admin_frame = Frame(mystat, width=1270, height=750, bg="#DCDCDC")
     admin_frame.place(x=0, y=0)
 
@@ -124,7 +173,7 @@ def admin_frame():
     quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
     quit_btn_in_btn.place(x=1220,y=15)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
-
+#______________ADMIN_ACC_VIEWS_END________________
 
 
 #______________REGISTARTION FRAME
