@@ -4,30 +4,26 @@ import webbrowser #добавил чтобы мог управлять ссыл�
 from tkinter import messagebox
 
 
-# class Schedule:
-#     def __init__(self, time, subject, group, room, count_student):
-#         self.time = time
-#         self.subject = subject
-#         self.group = group
-#         self.room = room
-#         self.count_student = count_student
+class Schedule:
+    def __init__(self, time, subject, group, room, count_student):
+        self.time = time
+        self.subject = subject
+        self.group = group
+        self.room = room
+        self.count_student = count_student
 
-#     def __str__(self): #Сам не понял для чего я это создал!, но пусть пока остаётся
-        
-#         return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студента -- {self.count_student}")
+    def schedule_create(self):
+        with open("data/Created_Schedule.txt", 'a') as file:
+            file.write(f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
+            messagebox.showinfo("Успех","Вы успешно создали расписание!")
 
-#     def schedule_create(self):
-#         with open("data/users_data.txt", 'a') as file:
-#             file.write(f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
-#             messagebox.showinfo("Успех","Вы успешно создали расписание!")
-
-# class Admin:
-#     def __init__(self,show,add,remove,edit,save):
-#         self.show = show
-#         self.add = add
-#         self.remove = remove 
-#         self.edit = edit
-#         self.save = save
+class Admin:
+    def __init__(self,show,add,remove,edit,save):
+        self.show = show
+        self.add = add
+        self.remove = remove 
+        self.edit = edit
+        self.save = save
     
 
 
@@ -36,17 +32,6 @@ class Users:
         self.name = name
         self.password = password
         self.email = email
-
-    def __str__(self): #Сам не понял для чего я это создал!, но пусть пока остаётся
-        return f'''
-______________________________
-
-Имя - {self.name}
-Пароль - {self.password}            
-Э-почта - {self.email}
-__________________________
-
-'''
 
     def user_reg(self):
         username = self.name
@@ -146,6 +131,9 @@ def admin_frame_win():
     admin_frame.place(x=0, y=0)
 
     def calendar_add_frame():
+        calendar_frame = Frame(admin_frame, width=1250, height=800, bg="#694185")
+        calendar_frame.place(x=67, y=100)
+        
         design3 = Label(admin_frame)
         design3.config(bg='#46394b',padx=700,pady=20)
         design3.place(x=67,y=60)
@@ -162,13 +150,65 @@ def admin_frame_win():
 
 
         #_________END___________________
-
+    
         #ADD_BUTTON_AND_FUNK______
-        def add_btn_funk():
-            pass
+        def add_btn_frame():
+            add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
+            add_frame.place(x=67, y=120)
+
+            time_add = Entry(add_frame)
+            time_add.config(font=("Arial Bond",14))
+            time_add.place(x=50,y=50,height=35,width=220)
+
+            subject_add = Entry(add_frame)
+            subject_add.config(font=("Arial Bond",14))
+            subject_add.place(x=50,y=50,height=35,width=220)
+           
+            group_add = Entry(add_frame)
+            group_add.config(font=("Arial Bond",14))
+            group_add.place(x=50,y=100,height=35,width=220)
+
+            room_add = Entry(add_frame)
+            room_add.config(font=("Arial Bond",14))
+            room_add.place(x=50,y=150,height=35,width=220)
+
+            count_stn_add = Entry(add_frame)
+            count_stn_add.config(font=("Arial Bond",14))
+            count_stn_add.place(x=50,y=200,height=35,width=220)
+
+            time_add_text = Label(add_frame, text="--Время урока")
+            time_add_text.config(font=("Arial Bond",14),bg="#694185")
+            time_add_text.place(x=300,y=50)
+
+            subject_add_text = Label(add_frame, text="--Название предмета")
+            subject_add_text.config(font=("Arial Bond",14),bg="#694185")
+            subject_add_text.place(x=300,y=100)
+
+            room_add_text = Label(add_frame, text="--Комната")
+            room_add_text.config(font=("Arial Bond",14),bg="#694185")
+            room_add_text.place(x=300,y=150)
+
+            time_add_text = Label(add_frame, text="--Колличество студентов")
+            time_add_text.config(font=("Arial Bond",14),bg="#694185")
+            time_add_text.place(x=300,y=200)
+            
+            def create_schedule():
+           
+                time = time_add.get()
+                subject = subject_add.get()
+                group = group_add.get()
+                room = room_add.get()
+                count_student = count_stn_add.get()
+                schedule = Schedule(time,subject,group,room,count_student)
+                schedule.schedule_create()   
+
+            schedule_add = Button(add_frame, text="Добавить",command=create_schedule)
+            schedule_add.config(padx=15,pady=14)
+            schedule_add.place(x=247,y=360)
+            
 
 
-        add_btn = Button(admin_frame, text="Добавить")
+        add_btn = Button(admin_frame, text="Создать",command=add_btn_frame)
         add_btn.config(padx=15,pady=14)
         add_btn.place(x=190,y=65)
 
@@ -276,6 +316,14 @@ def admin_frame_win():
     quit_btn_in_btn.place(x=1220,y=15)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
 #______________ADMIN_ACC_VIEWS_END________________
+
+
+
+
+
+
+
+
 
 
 #______________REGISTARTION FRAME
