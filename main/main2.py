@@ -88,15 +88,15 @@ def admin_frame():
     admin_text = Label(admin_frame, text='admin')
     admin_text.config(bg='#D3D3D3',
                         fg='#563bea',
-                    font= ("Ubuntu" , 12),bd=0)
-    admin_text.place(x=85,y=30)
+                    font= ("Ubuntu" , 13),bd=0)
+    admin_text.place(x=85,y=35)
 
 
     mystat_text = Label(admin_frame, text='MyStat')
     mystat_text.config(bg='#D3D3D3',
                         fg='#563bea',
                     font= ("Arial Black" , 14),bd=0)
-    mystat_text.place(x=75,y=4)
+    mystat_text.place(x=75,y=9)
 
     step_logo =Image.open("files/step_logo2.png")
     resized_step_logo_in = step_logo.resize((65, 75))
@@ -109,11 +109,11 @@ def admin_frame():
     resized_admin_logo_in = admin_logo.resize((55, 55))
     admin_logo_in = ImageTk.PhotoImage(resized_admin_logo_in)
     admin_logo_in_bg = Label(admin_frame, image=admin_logo_in, bd=0, bg = '#D3D3D3' )
-    admin_logo_in_bg.place(x=5,y=85)
+    admin_logo_in_bg.place(x=5,y=95)
     admin_logo_in_bg.image = admin_logo_in# Сохраняем ссылку на изображение
 
     def go_back_btn_funk():
-        options = messagebox.askquestion("Уже выходишь(?","Ты уверерн что хочешь выйти из аккаунта ??", )
+        options = messagebox.askquestion("Уже выходишь(?","Ты точно хочешь выйти из аккаунта ??", )
         if options == 'yes':
             main_view()
 
@@ -122,7 +122,7 @@ def admin_frame():
     resized_quit_btn_in = quit_btn.resize((35, 35))
     quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
     quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
-    quit_btn_in_btn.place(x=1220,y=8)
+    quit_btn_in_btn.place(x=1220,y=15)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
 
 
