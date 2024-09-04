@@ -56,7 +56,7 @@ __________________________
                     user_acc_frame()
                     return
         if login == admin_log.username and password == admin_log.password:
-            admin_frame()
+            admin_frame_win()
         else:
             messagebox.showerror("Ошибка", "Неверный логин или пароль.")
    
@@ -84,10 +84,7 @@ def user_acc_frame():
     design1.config(bg='#D3D3D3',padx=700,pady=20)
     design1.place(x=0,y=0)
 
-    design2 = Label(user_frame)
-    design2.config(bg='#D3D3D3',padx=30,pady=500)
-    design2.place(x=0,y=0)
-
+   
     mystat_text = Label(user_frame, text='MyStat')
     mystat_text.config(bg='#D3D3D3',
                         fg='#563bea',
@@ -117,7 +114,7 @@ def user_acc_frame():
 #______________USERS_ACC_VIEWS_END________________
 
 #___________Admin__ACCOUNT____FRAME_____
-def admin_frame():
+def admin_frame_win():
 
 
 
@@ -125,13 +122,31 @@ def admin_frame():
     admin_frame = Frame(mystat, width=1270, height=750, bg="#DCDCDC")
     admin_frame.place(x=0, y=0)
 
+    def calendar_add_frame():
+
+       
+
+        design3 = Label(admin_frame)
+        design3.config(bg='#46394b',padx=700,pady=20)
+        design3.place(x=67,y=60)
+
+
+
     design1 = Label(admin_frame)
     design1.config(bg='#D3D3D3',padx=700,pady=20)
-    design1.place(x=0,y=0)
+    design1.place(x=0,y=0) 
 
     design2 = Label(admin_frame)
     design2.config(bg='#D3D3D3',padx=30,pady=500)
     design2.place(x=0,y=0)
+
+    calendar_add =Image.open("files/calendar_add.png")
+    resized_calendar_add_in = calendar_add.resize((55, 55))
+    calendar_add_in = ImageTk.PhotoImage(resized_calendar_add_in)
+    calendar_add_in_bg = Button(admin_frame, image=calendar_add_in, bd=0, bg = '#D3D3D3', command=calendar_add_frame)
+    calendar_add_in_bg.place(x=5,y=200)
+    calendar_add_in_bg.image = calendar_add_in# Сохраняем ссылку на изображение
+
 
 
     admin_text = Label(admin_frame, text='admin')
@@ -148,16 +163,16 @@ def admin_frame():
     mystat_text.place(x=75,y=9)
 
     step_logo =Image.open("files/step_logo2.png")
-    resized_step_logo_in = step_logo.resize((65, 75))
+    resized_step_logo_in = step_logo.resize((60, 75))
     step_logo_in = ImageTk.PhotoImage(resized_step_logo_in)
-    step_logo_in_bg = Label(admin_frame, image=step_logo_in, bd=0, bg = '#D3D3D3' )
+    step_logo_in_bg = Button(admin_frame, image=step_logo_in, bd=0, bg = '#D3D3D3',command=admin_frame_win )
     step_logo_in_bg.place(x=0,y=0)
     step_logo_in_bg.image = step_logo_in# Сохраняем ссылку на изображение
     
     admin_logo =Image.open("files/admin_anonim.png")
     resized_admin_logo_in = admin_logo.resize((55, 55))
     admin_logo_in = ImageTk.PhotoImage(resized_admin_logo_in)
-    admin_logo_in_bg = Label(admin_frame, image=admin_logo_in, bd=0, bg = '#D3D3D3' )
+    admin_logo_in_bg = Button(admin_frame, image=admin_logo_in, bd=0, bg = '#D3D3D3',command=admin_frame_win )
     admin_logo_in_bg.place(x=5,y=95)
     admin_logo_in_bg.image = admin_logo_in# Сохраняем ссылку на изображение
 
