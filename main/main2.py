@@ -4,31 +4,30 @@ import webbrowser #добавил чтобы мог управлять ссыл�
 from tkinter import messagebox
 
 
-class Schedule:
-    def __init__(self, time, subject, group, room, count_student):
-        self.time = time
-        self.subject = subject
-        self.group = group
-        self.room = room
-        self.count_student = count_student
-    def __str__(self):
+# class Schedule:
+#     def __init__(self, time, subject, group, room, count_student):
+#         self.time = time
+#         self.subject = subject
+#         self.group = group
+#         self.room = room
+#         self.count_student = count_student
+
+#     def __str__(self): #Сам не понял для чего я это создал!, но пусть пока остаётся
         
-        return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студента -- {self.count_student}")
+#         return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студента -- {self.count_student}")
 
-list_schedule = [
-    Schedule("10:00","Python","12a", "6", "13"),
-    Schedule("12:00","Cybersecurity", "10b","5","15"),
-    Schedule("14:00","DevOps","11e","3",'10')
-    
-]    
+#     def schedule_create(self):
+#         with open("data/users_data.txt", 'a') as file:
+#             file.write(f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
+#             messagebox.showinfo("Успех","Вы успешно создали расписание!")
 
-class Admin:
-    def __init__(self,show,add,remove,edit,save):
-        self.show = show
-        self.add = add
-        self.remove = remove 
-        self.edit = edit
-        self.save = save
+# class Admin:
+#     def __init__(self,show,add,remove,edit,save):
+#         self.show = show
+#         self.add = add
+#         self.remove = remove 
+#         self.edit = edit
+#         self.save = save
     
 
 
@@ -105,6 +104,9 @@ def user_acc_frame():
     design1.config(bg='#D3D3D3',padx=700,pady=20)
     design1.place(x=0,y=0)
 
+    design2 = Label(user_frame)
+    design2.config(bg='#D3D3D3',padx=30,pady=500)
+    design2.place(x=0,y=0)
    
     mystat_text = Label(user_frame, text='MyStat')
     mystat_text.config(bg='#D3D3D3',
@@ -148,26 +150,74 @@ def admin_frame_win():
         design3.config(bg='#46394b',padx=700,pady=20)
         design3.place(x=67,y=60)
         #_____________________________________
+         
+         #SHOW_BUTTON_AND_FUNK______
+        def show_btn_funk():
+            pass
+
+
         show_btn = Button(admin_frame, text="Показать")
         show_btn.config(padx=15,pady=14)
         show_btn.place(x=80,y=65)
+
+
+        #_________END___________________
+
+        #ADD_BUTTON_AND_FUNK______
+        def add_btn_funk():
+            pass
+
 
         add_btn = Button(admin_frame, text="Добавить")
         add_btn.config(padx=15,pady=14)
         add_btn.place(x=190,y=65)
 
+    
+
+        #_________END___________________
+
+        #DELETE_BUTTON_AND_FUNK______
+        def delete_btn_funk():
+            pass
+
+
+
         delete_btn = Button(admin_frame, text="Удалить")
         delete_btn.config(padx=15,pady=14)
         delete_btn.place(x=300,y=65)
+
+
+        #_________END___________________
+
+
+
+        #EDIT_BUTTON_AND_FUNK______
+
+        def edit_btn_funk():
+            pass
+
 
         edit_btn = Button(admin_frame, text="Редактировать")
         edit_btn.config(padx=15,pady=14)
         edit_btn.place(x=400,y=65) 
 
+
+        #_________END___________________
+        
+
+        #SAVE_BUTTON_AND_FUNK______
+
+        def save_btn_funk():   
+            pass
+
+
+
         save_btn = Button(admin_frame, text="Сохранить!")
         save_btn.config(padx=15,pady=14)
         save_btn.place(x=540,y=65)
         
+
+        #_________END___________________
 
     design1 = Label(admin_frame)
     design1.config(bg='#D3D3D3',padx=700,pady=20)
