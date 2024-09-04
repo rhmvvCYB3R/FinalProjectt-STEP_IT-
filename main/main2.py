@@ -265,7 +265,7 @@ def admin_frame_win():
 
 
 
-        save_btn = Button(admin_frame, text="Сохранить!")
+        save_btn = Button(admin_frame, text="Показать")
         save_btn.config(padx=15,pady=14)
         save_btn.place(x=540,y=65)
         
