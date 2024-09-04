@@ -12,7 +12,7 @@ class Schedule:
         self.room = room
         self.count_student = count_student
     def __str__(self):
-         return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}")
+         return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}\n")
 
 list_schedule = [
 
@@ -210,7 +210,6 @@ def admin_frame_win():
                 adder = Schedule(time,subject,group,room,count_student)
                 path = "data/StudentSchedule.txt"
                 with open(path, "a", encoding="utf=8") as file:
-                    for spisok in list_schedule:
                         file.write("\n___________________")
                         file.write(str(adder))
         
