@@ -143,7 +143,7 @@ def admin_frame_win():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             add_frame.place(x=67, y=120)
             
-            schedules_listbox = Listbox(add_frame, font=("Arial Bond", 13), bg="#837da2", fg="black")
+            schedules_listbox = Listbox(add_frame, font=("Arial Bond", 13), bg="#e7ccf9", fg="black")
             schedules_listbox.place(x=50, y=50, width=1100, height=450)
             
             with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
@@ -166,43 +166,45 @@ def admin_frame_win():
             add_frame.place(x=67, y=120)
             #______________ENTRIES_________________
             time_add = Entry(add_frame)
-            time_add.config(font=("Arial Bond",14))
+            time_add.config(font=("Arial",16),bg="#f9e6f6",fg="black")
             time_add.place(x=50,y=50,height=35,width=220)
 
             subject_add = Entry(add_frame)
-            subject_add.config(font=("Arial Bond",14))
+            subject_add.config(font=("Arial",16),bg="#f9e6f6",fg="black")
             subject_add.place(x=50,y=100,height=35,width=220)
            
             group_add = Entry(add_frame)
-            group_add.config(font=("Arial Bond",14))
+            group_add.config(font=("Arial",16),bg="#f9e6f6",fg="black")
             group_add.place(x=50,y=150,height=35,width=220)
 
             room_add = Entry(add_frame)
-            room_add.config(font=("Arial Bond",14))
+            room_add.config(font=("Arial",16),bg="#f9e6f6",fg="black")
             room_add.place(x=50,y=200,height=35,width=220)
 
             count_stn_add = Entry(add_frame)
-            count_stn_add.config(font=("Arial Bond",14))
+            count_stn_add.config(font=("Arial",16),bg="#f9e6f6",fg="black")
             count_stn_add.place(x=50,y=250,height=35,width=220)
+
+
             #______________TEXT_LABELS______________________________-
             time_add_text = Label(add_frame, text="--Время урока")
-            time_add_text.config(font=("Arial Bond",14),bg="#694185")
+            time_add_text.config(font=("Arial",16),bg="#694185",fg="white")
             time_add_text.place(x=300,y=50)
 
             subject_add_text = Label(add_frame, text="--Название предмета")
-            subject_add_text.config(font=("Arial Bond",14),bg="#694185")
+            subject_add_text.config(font=("Arial",16),bg="#694185",fg="white")
             subject_add_text.place(x=300,y=100)
 
             group_add_text = Label(add_frame, text="--Группа")
-            group_add_text.config(font=("Arial Bond",14),bg="#694185")
+            group_add_text.config(font=("Arial",16),bg="#694185",fg="white")
             group_add_text.place(x=300,y=150)
 
             room_add_text = Label(add_frame, text="--Комната")
-            room_add_text.config(font=("Arial Bond",14),bg="#694185")
+            room_add_text.config(font=("Arial",16),bg="#694185",fg="white")
             room_add_text.place(x=300,y=200)
 
             count_stn_text = Label(add_frame, text="--Колличество студентов")
-            count_stn_text.config(font=("Arial Bond",14),bg="#694185")
+            count_stn_text.config(font=("Arial",16),bg="#694185",fg="white")
             count_stn_text.place(x=300,y=250)
             
             
@@ -215,10 +217,10 @@ def admin_frame_win():
                 adder = Schedule(time,subject,group,room,count_student)
                 path = "data/StudentSchedule.txt"
                 with open(path, "a", encoding="utf=8") as file:
-                        file.write("\n___________________")
+                        file.write("\n____________________________________________________________________________________________________________________________________")
                         file.write(str(adder))
         
-                messagebox.showinfo("Успех","Записано")
+                messagebox.showinfo("Успех","Записано!")
 
             schedule_add = Button(add_frame, text="Добавить",command=create_schedule)
             schedule_add.config(padx=15,pady=14)
