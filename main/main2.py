@@ -15,14 +15,12 @@ class Schedule:
          return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}\n")
 
  
+    def create_schedule(self):
+            path = "data/StudentSchedule.txt"
+            with open(path, "a", encoding="utf=8") as file:
+                file.write("\n____________________________________________________________________________________________________________________________________")
+                file.write(str(self))
 
-class Admin:
-    def __init__(self,show,add,remove,edit,save):
-        self.show = show
-        self.add = add
-        self.remove = remove 
-        self.edit = edit
-        self.save = save
     
 
 
@@ -138,6 +136,10 @@ def admin_frame_win():
         design3.place(x=67,y=60)
         #_____________________________________
          
+
+
+
+
          #SHOW_BUTTON_AND_FUNK______
         def show_btn_funk():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
@@ -151,13 +153,17 @@ def admin_frame_win():
             
             for datas in data:
                 schedules_listbox.insert(END, datas.strip())
+
+
+                
         show_btn = Button(admin_frame, text="Показать",command=show_btn_funk)
         show_btn.config(padx=15,pady=14)
         show_btn.place(x=80,y=65)
 
-
         #_________END___________________
     
+
+
 
 
         #ADD_BUTTON_AND_FUNK______
@@ -214,13 +220,11 @@ def admin_frame_win():
                 group = group_add.get()
                 room = room_add.get()
                 count_student = count_stn_add.get()
-                adder = Schedule(time,subject,group,room,count_student)
-                path = "data/StudentSchedule.txt"
-                with open(path, "a", encoding="utf=8") as file:
-                        file.write("\n____________________________________________________________________________________________________________________________________")
-                        file.write(str(adder))
-        
-                messagebox.showinfo("Успех","Записано!")
+                new_schedule_add = Schedule(time, subject, group, room, count_student)
+                new_schedule_add.create_schedule()
+                messagebox.showinfo("Успех", "Записано!")
+                
+                
 
             schedule_add = Button(add_frame, text="Добавить",command=create_schedule)
             schedule_add.config(padx=15,pady=14)
