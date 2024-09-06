@@ -225,9 +225,12 @@ def admin_frame_win():
                 group = group_add.get()
                 room = room_add.get()
                 count_student = count_stn_add.get()
-                new_schedule_add = Schedule(time, subject, group, room, count_student)
-                new_schedule_add.create_schedule()
-                messagebox.showinfo("Успех", "Записано!")
+                if time in [""] or subject in [""] or group in [""] or room in [""] or count_student in [""]:
+                    messagebox.showerror("Ошибка", "Введите данные!")
+                else: 
+                    new_schedule_add = Schedule(time, subject, group, room, count_student)
+                    new_schedule_add.create_schedule()
+                    messagebox.showinfo("Успех", "Записано!")
                 
                 
 
