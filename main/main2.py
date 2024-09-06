@@ -4,6 +4,7 @@ import webbrowser #добавил чтобы мог управлять ссыл�
 from tkinter import messagebox
 
 
+
 class Schedule:
     def __init__(self, time, subject, group, room, count_student):
         self.time = time
@@ -14,14 +15,18 @@ class Schedule:
     def __str__(self):
          return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}\n")
 
+
+
  
     def create_schedule(self):
-            path = "data/StudentSchedule.txt"
-            with open(path, "a", encoding="utf=8") as file:
-                file.write("\n____________________________________________________________________________________________________________________________________")
-                file.write(str(self))
+        path = "data/StudentSchedule.txt"
+        with open(path, "a", encoding="utf=8") as file:
+            file.write("\n____________________________________________________________________________________________________________________________________")
+            file.write(str(self))
 
     
+        
+
 
 
 class Users:
@@ -166,7 +171,7 @@ def admin_frame_win():
 
 
 
-        #ADD_BUTTON_AND_FUNK______
+        #___________ADD_BUTTON_AND_FUNK______
         def add_btn_frame():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             add_frame.place(x=67, y=120)
@@ -238,53 +243,99 @@ def admin_frame_win():
 
     
 
-        #_________END___________________
+        #______ADD_BUTTON_AND_FUNK___END___________________
 
 
 
-        #DELETE_BUTTON_AND_FUNK______
+        #______DELETE_BUTTON_AND_FUNK______
         def delete_btn_funk():
-            pass
+            delete_btn_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
+            delete_btn_frame.place(x=67, y=120)
+            
+            del_subject = Entry(delete_btn_frame)
+            del_subject.config(font=("Arial",16),bg="#f9e6f6",fg="black")
+            del_subject.place(x=50,y=50,height=35,width=220)
+
+            del_time = Entry(delete_btn_frame)
+            del_time.config(font=("Arial",16),bg="#f9e6f6",fg="black")
+            del_time.place(x=50,y=100,height=35,width=220)
+
+            subject_del_text = Label(delete_btn_frame, text="--Название предмета")
+            subject_del_text.config(font=("Arial",16),bg="#694185",fg="white")
+            subject_del_text.place(x=300,y=50)
+
+            time_del_text = Label(delete_btn_frame, text="--Время урока")
+            time_del_text.config(font=("Arial",16),bg="#694185",fg="white")
+            time_del_text.place(x=300,y=100)
 
 
+            def delete_funk():
+                subject = del_subject.get()
+                time = del_time.get()
 
-        delete_btn = Button(admin_frame, text="Удалить")
+                deleter = Schedule(time,subject,None,None,None)
+                deleter.delete_schedule()
+                 
+            deleter_btn = Button(delete_btn_frame,text="Удалить",command=delete_funk)
+            deleter_btn.config(padx=15,pady=14)
+            deleter_btn.place(x=187,y=145)
+            
+
+
+        delete_btn = Button(admin_frame, text="Удалить",command=delete_btn_funk)
         delete_btn.config(padx=15,pady=14)
         delete_btn.place(x=300,y=65)
 
 
-        #_________END___________________
+        #______DELETE_BUTTON_AND_FUNK___END___________________
 
 
 
-        #EDIT_BUTTON_AND_FUNK______
+        #________EDIT_BUTTON_AND_FUNK______
 
         def edit_btn_funk():
             pass
 
 
-        edit_btn = Button(admin_frame, text="Редактировать")
+        edit_btn = Button(admin_frame, text="Редактировать",command=edit_btn_funk)
         edit_btn.config(padx=15,pady=14)
         edit_btn.place(x=400,y=65) 
 
 
-        #_________END___________________
+        #____EDIT_BUTTON_AND_FUNK___END___________________
+        
         
 
-        #SAVE_BUTTON_AND_FUNK______
+        #_________Find_BUTTON_AND_FUNK______
 
 
         def find_btn_funk():   
             pass
 
 
-        find_btn = Button(admin_frame, text="Поиск")
+        find_btn = Button(admin_frame, text="Поиск",command=find_btn_funk)
         find_btn.config(padx=15,pady=14)
         find_btn.place(x=540,y=65)
         
 
-        #_________END___________________
 
+        def sort_btn_funk():
+            pass
+
+
+        sort_btn = Button(admin_frame, text="Сортировка",command=sort_btn_funk)
+        sort_btn.config(padx=15,pady=14)
+        sort_btn.place(x=630,y=65)
+
+
+
+
+
+        #______FIND_BUTTON_AND_FUNK___END___________________
+
+
+
+    #________ADMIN_FRAME_VIEWS
     design1 = Label(admin_frame)
     design1.config(bg='#D3D3D3',padx=700,pady=20)
     design1.place(x=0,y=0) 
@@ -300,14 +351,11 @@ def admin_frame_win():
     calendar_add_in_bg.place(x=5,y=200)
     calendar_add_in_bg.image = calendar_add_in# Сохраняем ссылку на изображение
 
-
-
     admin_text = Label(admin_frame, text='admin')
     admin_text.config(bg='#D3D3D3',
                         fg='#563bea',
                     font= ("Ubuntu" , 13),bd=0)
     admin_text.place(x=85,y=35)
-
 
     mystat_text = Label(admin_frame, text='MyStat')
     mystat_text.config(bg='#D3D3D3',
@@ -334,19 +382,13 @@ def admin_frame_win():
         if options == 'yes':
             main_view()
 
-
     quit_btn =Image.open("files/exitbtn.png")
     resized_quit_btn_in = quit_btn.resize((35, 35))
     quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
     quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
     quit_btn_in_btn.place(x=1220,y=15)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
-#______________ADMIN_ACC_VIEWS_END________________
-
-
-
-
-
+#______________ADMIN_FRAME_VIEWS_END________________
 
 
 
@@ -594,8 +636,8 @@ def main_view():
 
 
 
-
-main_view()
+admin_frame_win()
+# main_view()
 mystat.mainloop()
 
 
