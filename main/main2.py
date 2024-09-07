@@ -37,7 +37,7 @@ class Schedule:
             
 
     def del_schedule():
-         with open("data/StudentSchedule.txt", 'w', encoding='utf-8') as file:
+         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
             global datas
             datas.clear()
             for data in file:
@@ -282,11 +282,26 @@ def admin_frame_win():
         def delete_btn_funk():
             delete_btn_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             delete_btn_frame.place(x=67, y=120)
+            Schedule.del_schedule()
             
+            columns = ("time", "subject", "group","room","count_student")    
+            tree = ttk.Treeview(admin_frame,columns=columns, show="headings")
+            tree.place(x=100,y=140,width=1000,height=500)
+
+
+            tree.heading("time", text="Время")
+            tree.heading("subject", text="Предмет")
+            tree.heading("group", text="Группа")
+            tree.heading("room", text="Комната")
+            tree.heading("count_student", text="Колл-студента")
+            datas
+            for info in datas:
+                tree.insert("", END, values=info)
             
-        
-            
-                 
+           
+            del_chosed_btn = Button(delete_btn_frame, text="Удалить выбранное!")
+            del_chosed_btn.config(padx=15,pady=14)
+            del_chosed_btn.place(x=1040,y=467)     
            
             
 

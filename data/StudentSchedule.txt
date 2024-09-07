@@ -1,3 +1,3 @@
 10:00,Python,Sama,5,15
 11:30,DevOps,Islam Tamayev,online,12
-asd,adasd,asda,sad,asda
+13:00,C++,Alexander Pushkin,5d,13
