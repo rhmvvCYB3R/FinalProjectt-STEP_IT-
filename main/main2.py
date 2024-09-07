@@ -34,8 +34,20 @@ class Schedule:
                 list_s=[time,subject,group,room,count_student]
                 datas.append(list_s)
         
-            print(datas)
-       
+            
+
+    def del_schedule():
+         with open("data/StudentSchedule.txt", 'w', encoding='utf-8') as file:
+            global datas
+            datas.clear()
+            for data in file:
+                data = data.strip()
+                schedule = data.split(",")
+                time, subject, group,room,count_student = schedule
+                list_s=[time,subject,group,room,count_student]
+                datas.append(list_s)
+        
+         
    
 class Users:
     def __init__(self, name, password, email):
@@ -162,7 +174,7 @@ def admin_frame_win():
 
             columns = ("time", "subject", "group","room","count_student")    
             tree = ttk.Treeview(admin_frame,columns=columns, show="headings")
-            tree.place(x=100,y=200)
+            tree.place(x=100,y=140,width=1000,height=500)
 
 
             tree.heading("time", text="Время")
@@ -271,33 +283,11 @@ def admin_frame_win():
             delete_btn_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             delete_btn_frame.place(x=67, y=120)
             
-            del_subject = Entry(delete_btn_frame)
-            del_subject.config(font=("Arial",16),bg="#f9e6f6",fg="black")
-            del_subject.place(x=50,y=50,height=35,width=220)
-
-            del_time = Entry(delete_btn_frame)
-            del_time.config(font=("Arial",16),bg="#f9e6f6",fg="black")
-            del_time.place(x=50,y=100,height=35,width=220)
-
-            subject_del_text = Label(delete_btn_frame, text="--Название предмета")
-            subject_del_text.config(font=("Arial",16),bg="#694185",fg="white")
-            subject_del_text.place(x=300,y=50)
-
-            time_del_text = Label(delete_btn_frame, text="--Время урока")
-            time_del_text.config(font=("Arial",16),bg="#694185",fg="white")
-            time_del_text.place(x=300,y=100)
-
-
-            def delete_funk():
-                subject = del_subject.get()
-                time = del_time.get()
-
-                deleter = Schedule(time,subject,None,None,None)
-                deleter.delete_schedule()
+            
+        
+            
                  
-            deleter_btn = Button(delete_btn_frame,text="Удалить",command=delete_funk)
-            deleter_btn.config(padx=15,pady=14)
-            deleter_btn.place(x=187,y=145)
+           
             
 
 
