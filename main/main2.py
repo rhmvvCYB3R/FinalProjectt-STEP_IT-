@@ -21,10 +21,30 @@ class Schedule:
     def create_schedule(self):
         path = "data/StudentSchedule.txt"
         with open(path, "a", encoding="utf=8") as file:
+
             file.write(str(self))
 
-    
-    
+    def show_schedule():
+        datas = []
+        with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+            for data in file:
+                data = data.strip()
+                schedule = data.split(",")
+                time, subject, group,room,count_student = schedule
+                tuple_s=(time,subject,group,room,count_student)
+                datas.append(tuple_s)
+        columns = ("time", "subject", "group","room","count_student")    
+        tree = ttk.Treeview(columns=columns, show="headings")
+        tree.place(x=100,y=200)
+
+
+        tree.heading("time", text="Время")
+        tree.heading("subject", text="Предмет")
+        tree.heading("group", text="Группа")
+        tree.heading("room", text="Комната")
+        tree.heading("count_student", text="Колл-студента")
+        for info in datas:
+            tree.insert("", END, values=info)
 
 
 class Users:
@@ -148,28 +168,9 @@ def admin_frame_win():
         def show_btn_funk():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             add_frame.place(x=67, y=120)
-        
+            Schedule.show_schedule()
                
-            
-
-        with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
-            for data in file:
-                data = data.strip()#метод строки, который удаляет пробелы в начале и в конце строки.
-                schedule = data.split(",")# разделяет очищенную строку на список элементов по запятым.
-                time, subject, group,room,count_student = schedule #происходит распаковка списка или кортежа на несколько переменных.
-            datas = [(time,subject,group,room,count_student)]    
-            columns = ("time", "subject", "group","room","count_student")    
-            tree = ttk.Treeview(columns=columns, show="headings")
-            tree.pack(fill=BOTH, expand=1)
-            tree.heading("time", text="Время")
-            tree.heading("subject", text="Предмет")
-            tree.heading("group", text="Группа")
-            tree.heading("room", text="Комната")
-            tree.heading("count_student", text="Колл-студента")
-            for info in datas:
-                 tree.insert("", END, values=info)
-            
-           
+    
 
                 
         show_btn = Button(admin_frame, text="Показать",command=show_btn_funk)
