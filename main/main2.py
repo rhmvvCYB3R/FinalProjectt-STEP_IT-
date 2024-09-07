@@ -3,7 +3,7 @@ from PIL import Image, ImageTk #чтобы можно было добавить 
 import webbrowser #добавил чтобы мог управлять ссылками
 from tkinter import messagebox,ttk
 
-
+datas = []
 
 class Schedule:
     def __init__(self, time, subject, group, room, count_student):
@@ -15,8 +15,6 @@ class Schedule:
     def __str__(self):
          return (f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
 
-
-
  
     def create_schedule(self):
         path = "data/StudentSchedule.txt"
@@ -24,29 +22,21 @@ class Schedule:
 
             file.write(str(self))
 
+
     def show_schedule():
-        datas = []
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+            global datas
+            datas.clear()
             for data in file:
                 data = data.strip()
                 schedule = data.split(",")
                 time, subject, group,room,count_student = schedule
-                tuple_s=(time,subject,group,room,count_student)
-                datas.append(tuple_s)
-        columns = ("time", "subject", "group","room","count_student")    
-        tree = ttk.Treeview(columns=columns, show="headings")
-        tree.place(x=100,y=200)
-
-
-        tree.heading("time", text="Время")
-        tree.heading("subject", text="Предмет")
-        tree.heading("group", text="Группа")
-        tree.heading("room", text="Комната")
-        tree.heading("count_student", text="Колл-студента")
-        for info in datas:
-            tree.insert("", END, values=info)
-
-
+                list_s=[time,subject,group,room,count_student]
+                datas.append(list_s)
+        
+            print(datas)
+       
+   
 class Users:
     def __init__(self, name, password, email):
         self.name = name
@@ -169,10 +159,24 @@ def admin_frame_win():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             add_frame.place(x=67, y=120)
             Schedule.show_schedule()
-               
-    
 
+            columns = ("time", "subject", "group","room","count_student")    
+            tree = ttk.Treeview(admin_frame,columns=columns, show="headings")
+            tree.place(x=100,y=200)
+
+
+            tree.heading("time", text="Время")
+            tree.heading("subject", text="Предмет")
+            tree.heading("group", text="Группа")
+            tree.heading("room", text="Комната")
+            tree.heading("count_student", text="Колл-студента")
+            datas
+            for info in datas:
+
+                tree.insert("", END, values=info)
                 
+            
+
         show_btn = Button(admin_frame, text="Показать",command=show_btn_funk)
         show_btn.config(padx=15,pady=14)
         show_btn.place(x=80,y=65)
