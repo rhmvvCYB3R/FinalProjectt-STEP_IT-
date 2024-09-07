@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk #чтобы можно было добавить фотки
 import webbrowser #добавил чтобы мог управлять ссылками
-from tkinter import messagebox
+from tkinter import messagebox,ttk
 
 
 
@@ -13,7 +13,7 @@ class Schedule:
         self.room = room
         self.count_student = count_student
     def __str__(self):
-         return (f"\nВремя -- {self.time} \nНазвание предмета -- {self.subject} \nНазвание группы -- {self.group} \nНазвание кабинета -- {self.room} \nКолл.студентов -- {self.count_student}\n")
+         return (f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
 
 
 
@@ -21,12 +21,10 @@ class Schedule:
     def create_schedule(self):
         path = "data/StudentSchedule.txt"
         with open(path, "a", encoding="utf=8") as file:
-            file.write("\n____________________________________________________________________________________________________________________________________")
             file.write(str(self))
 
     
-        
-
+    
 
 
 class Users:
@@ -51,6 +49,7 @@ class Users:
             file.write(f"{username},{password},{email}\n")
             messagebox.showinfo("Успех","Вы успешно создали аккаунт!")
     
+
     def admin_users_log_pass_check(login,password):
         import admin_log
         
@@ -149,16 +148,28 @@ def admin_frame_win():
         def show_btn_funk():
             add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
             add_frame.place(x=67, y=120)
+        
+               
             
-            schedules_listbox = Listbox(add_frame, font=("Arial Bond", 13), bg="#e7ccf9", fg="black")
-            schedules_listbox.place(x=50, y=50, width=1100, height=450)
-            
-            with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
-                data = file.readlines()
-            
-            for datas in data:
-                schedules_listbox.insert(END, datas.strip())
 
+        with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+            for data in file:
+                data = data.strip()#метод строки, который удаляет пробелы в начале и в конце строки.
+                schedule = data.split(",")# разделяет очищенную строку на список элементов по запятым.
+                time, subject, group,room,count_student = schedule #происходит распаковка списка или кортежа на несколько переменных.
+            datas = [(time,subject,group,room,count_student)]    
+            columns = ("time", "subject", "group","room","count_student")    
+            tree = ttk.Treeview(columns=columns, show="headings")
+            tree.pack(fill=BOTH, expand=1)
+            tree.heading("time", text="Время")
+            tree.heading("subject", text="Предмет")
+            tree.heading("group", text="Группа")
+            tree.heading("room", text="Комната")
+            tree.heading("count_student", text="Колл-студента")
+            for info in datas:
+                 tree.insert("", END, values=info)
+            
+           
 
                 
         show_btn = Button(admin_frame, text="Показать",command=show_btn_funk)
