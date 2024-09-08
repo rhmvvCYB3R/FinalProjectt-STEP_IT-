@@ -1,6 +1,6 @@
 from tkinter import *
-from PIL import Image, ImageTk #чтобы можно было добавить фотки
-import webbrowser #добавил чтобы мог управлять ссылками
+from PIL import Image, ImageTk
+import webbrowser 
 from tkinter import messagebox
 from tkinter import ttk 
 
@@ -951,9 +951,9 @@ def main_view():
 
 
 
-user_acc_frame()
+# user_acc_frame()
 # admin_frame_win()
-# main_view()
+main_view()
 mystat.mainloop()
 
 
