@@ -137,6 +137,48 @@ def user_acc_frame():
     #______________USERS_ACC_VIEWS____________________________________
     user_frame = Frame(mystat, width=1270, height=750, bg="white")
     user_frame.place(x=0, y=0)
+
+    def find_btn_funk():   
+        style = ttk.Style()
+        style.configure("Fancy.TButton", foreground="black", background="red")
+        Schedule.show_schedule()
+
+
+        find_frame = Frame(user_frame, width=1270, height=750, bg="white")
+        find_frame.place(x=65, y=55)
+
+        search_text = ttk.Label(find_frame,text="Введите название группы или название предмета!")
+        search_text.config(background="white",font=(("Arial"),13))
+        search_text.place(x=30,y=437)
+        search_entry = ttk.Entry(find_frame, style="Fancy.TButton")
+        search_entry.place(x=30, y=460, width=300, height=30)
+        columns = ("time", "subject", "group", "room", "count_student")
+        tree = ttk.Treeview(user_frame, columns=columns, show="headings")
+        tree.place(x=100, y=100, width=1100, height=350)
+
+        tree.heading("time", text="Время")
+        tree.heading("subject", text="Предмет")
+        tree.heading("group", text="Группа")
+        tree.heading("room", text="Комната")
+        tree.heading("count_student", text="Колл-студента")
+        
+    
+        def search_schedule():
+            info = search_entry.get().lower()  
+            for row in tree.get_children():
+                tree.delete(row)  
+
+            
+            for item in datas:
+                if info in item[1].lower() or info in item[2].lower():  # Проверяем в предмете и группе
+                    tree.insert("", END, values=item) 
+                    
+        find_Btn = ttk.Button(find_frame, text="Искать!", style="Fancy.TButton", command=search_schedule)
+        find_Btn.place(x=870, y=460, width=300, height=30)
+
+
+
+    
     def calendar_fr():
         calendar_frame = Frame(user_frame,width=1270, height=750, bg="white")
         calendar_frame.place(x=65,y=55)
@@ -168,6 +210,23 @@ def user_acc_frame():
         user_info_in_bg.place(x=0,y=0)
         user_info_in_bg.image = user_info_in
 
+    def sort_btn_funk():
+        sorted_frame = Frame(user_frame, width=1270, height=750, bg="white")
+        sorted_frame.place(x=65, y=55)
+        Schedule.sorted_frame()
+        style = ttk.Style()
+        style.configure("Fancy.TButton", foreground="black", background="red")
+        columns = ("time", "subject", "group", "room", "count_student")
+        tree = ttk.Treeview(user_frame, columns=columns, show="headings")
+        tree.place(x=100, y=100, width=1100, height=350)
+
+        tree.heading("time", text="Время")
+        tree.heading("subject", text="Предмет")
+        tree.heading("group", text="Группа")
+        tree.heading("room", text="Комната")
+        tree.heading("count_student", text="Колл-студента")
+        for info in datas:
+            tree.insert("", END, values=info)
 
 
     design1 = Label(user_frame)
@@ -184,6 +243,19 @@ def user_acc_frame():
                     font= ("Arial Black" , 15),bd=0)
     mystat_text.place(x=30,y=14)
 
+    find_btn =Image.open("files/find_btn.png")
+    resized_find_btn_in = find_btn.resize((55, 45))
+    find_btn_in = ImageTk.PhotoImage(resized_find_btn_in)
+    find_btn_in_bg = Button(user_frame, image=find_btn_in, bd=0, bg = 'white',command=find_btn_funk)
+    find_btn_in_bg.place(x=5,y=245)
+    find_btn_in_bg.image = find_btn_in
+
+    sort_btn =Image.open("files/sort_btn.png")
+    resized_sort_btn_in = sort_btn.resize((55, 45))
+    sort_btn_in = ImageTk.PhotoImage(resized_sort_btn_in)
+    sort_btn_in_bg = Button(user_frame, image=sort_btn_in, bd=0, bg = 'white',command=sort_btn_funk)
+    sort_btn_in_bg.place(x=8,y=310)
+    sort_btn_in_bg.image = sort_btn_in
 
     user_logo =Image.open("files/user_anonim.png")
     resized_user_logo_in = user_logo.resize((55, 55))
