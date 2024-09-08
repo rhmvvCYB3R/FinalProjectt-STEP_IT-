@@ -135,19 +135,51 @@ mystat.config(background="#FFFFFF")
 def user_acc_frame():
 
     #______________USERS_ACC_VIEWS____________________________________
-    user_frame = Frame(mystat, width=1270, height=750, bg="#DCDCDC")
+    user_frame = Frame(mystat, width=1270, height=750, bg="white")
     user_frame.place(x=0, y=0)
-    
+    def calendar_fr():
+        calendar_frame = Frame(user_frame,width=1270, height=750, bg="white")
+        calendar_frame.place(x=65,y=55)
+        Schedule.show_schedule()
+
+        columns = ("time", "subject", "group","room","count_student")    
+        tree = ttk.Treeview(calendar_frame,columns=columns, show="headings")
+        tree.place(x=0,y=0,width=1200,height=500)
+
+
+        tree.heading("time", text="Время")
+        tree.heading("subject", text="Предмет")
+        tree.heading("group", text="Группа")
+        tree.heading("room", text="Комната")
+        tree.heading("count_student", text="Колл-студента")
+        datas
+        for info in datas:
+
+            tree.insert("", END, values=info)
+
+    def user_logo_frame():
+        user_logo_fr = Frame(user_frame,width=1270, height=750, bg="white")
+        user_logo_fr.place(x=65,y=55)
+
+        user_info =Image.open("files/mainlabel.png")
+        resized_user_info_in = user_info.resize((1210, 700))
+        user_info_in = ImageTk.PhotoImage(resized_user_info_in)
+        user_info_in_bg = Label(user_logo_fr, image=user_info_in, bd=0, bg = 'white')
+        user_info_in_bg.place(x=0,y=0)
+        user_info_in_bg.image = user_info_in
+
+
+
     design1 = Label(user_frame)
-    design1.config(bg='#D3D3D3',padx=700,pady=20)
+    design1.config(bg='white',padx=700,pady=20)
     design1.place(x=0,y=0)
 
     design2 = Label(user_frame)
-    design2.config(bg='#D3D3D3',padx=30,pady=500)
+    design2.config(bg='white',padx=30,pady=500)
     design2.place(x=0,y=0)
    
     mystat_text = Label(user_frame, text='MyStat')
-    mystat_text.config(bg='#D3D3D3',
+    mystat_text.config(bg='white',
                         fg='#563bea',
                     font= ("Arial Black" , 15),bd=0)
     mystat_text.place(x=30,y=14)
@@ -156,7 +188,7 @@ def user_acc_frame():
     user_logo =Image.open("files/user_anonim.png")
     resized_user_logo_in = user_logo.resize((55, 55))
     user_logo_in = ImageTk.PhotoImage(resized_user_logo_in)
-    user_logo_in_bg = Label(user_frame, image=user_logo_in, bd=0, bg = '#D3D3D3' )
+    user_logo_in_bg = Button(user_frame, image=user_logo_in, bd=0, bg = 'white',command=user_logo_frame )
     user_logo_in_bg.place(x=5,y=95)
     user_logo_in_bg.image = user_logo_in
 
@@ -169,9 +201,25 @@ def user_acc_frame():
     quit_btn =Image.open("files/exitbtn.png")
     resized_quit_btn_in = quit_btn.resize((35, 35))
     quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
-    quit_btn_in_btn = Button(user_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
+    quit_btn_in_btn = Button(user_frame, image=quit_btn_in, bd=0, bg = 'white',command=go_back_btn_funk )
     quit_btn_in_btn.place(x=1220,y=10)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
+
+
+
+    calendar_btn =Image.open("files/calendar.png")
+    resized_calendar_btn_in = calendar_btn.resize((55, 55))
+    calendar_btn_in = ImageTk.PhotoImage(resized_calendar_btn_in)
+    calendar_btn_in_bg = Button(user_frame, image=calendar_btn_in, bd=0, bg = 'white',command=calendar_fr)
+    calendar_btn_in_bg.place(x=5,y=170)
+    calendar_btn_in_bg.image = calendar_btn_in
+
+
+
+
+
+
+
 #______________USERS_ACC_VIEWS_END________________
 
 #___________Admin__ACCOUNT____FRAME_____
@@ -831,9 +879,9 @@ def main_view():
 
 
 
-
+user_acc_frame()
 # admin_frame_win()
-main_view()
+# main_view()
 mystat.mainloop()
 
 
