@@ -1,11 +1,14 @@
 from tkinter import *
-from PIL import Image, ImageTk
-import webbrowser 
-from tkinter import messagebox
-from tkinter import ttk 
+from PIL import Image, ImageTk #библеотека Pillow для добавление фоток, использовал так как библеотека Tkinter не даёт добавлять больше одного!
+import webbrowser #чтобы сделать кнопку-фотку как svg файл!
+from tkinter import messagebox #для того чтобы показать info,error,askquestions
+from tkinter import ttk #для TreeView, еще чтобы более новый дизайн сделать(не получилась,т.к пришлось бы переделывать весь код)
 
-datas = []
+datas = []  #пустой лист для того чтобы кидать данные туда. Используется для добавления,показа,редактирования,поиска,сортировки,удаления 
+#элементов нашие StudentSchedule.тхт
 
+
+#класс Расписания
 class Schedule:
     def __init__(self, time, subject, group, room, count_student):
         self.time = time
@@ -13,18 +16,17 @@ class Schedule:
         self.group = group
         self.room = room
         self.count_student = count_student
-    def __str__(self):
+    def __str__(self): #для того чтобы записать в файл в таком формате!
          return (f"{self.time},{self.subject},{self.group},{self.room},{self.count_student}\n")
 
  
-    def create_schedule(self):
+    def create_schedule(self): #добавление расписания, остальная часть в admin frame
         path = "data/StudentSchedule.txt"
         with open(path, "a", encoding="utf=8") as file:
-
             file.write(str(self))
 
 
-    def show_schedule():
+    def show_schedule(): #показать расписание, остальная часть в admin frame
         global datas
         datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
@@ -37,7 +39,7 @@ class Schedule:
         
           
 
-    def del_schedule():
+    def del_schedule(): #удалить какой - либо расписание!, остальная часть в admin frame
         global datas
         datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
@@ -49,7 +51,7 @@ class Schedule:
                 datas.append(list_s)
         
     
-    def edit_schedule():
+    def edit_schedule(): #для того чтобы изменить расписание , остальная часть в admin frame
         global datas    
         datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
@@ -61,13 +63,13 @@ class Schedule:
                 datas.append(list_s)
 
 
-    def save_schedule():#после редоктирвания 
+    def save_schedule():#сохр.после редактирования ! 
         with open("data/StudentSchedule.txt", 'w', encoding='utf-8') as file:
             for schedule in datas:
                 file.write(",".join(schedule) + "\n")
 
    
-    def sorted_frame():
+    def sorted_frame(): #сортируем наш списой по времени!
         global datas    
         datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
@@ -77,15 +79,17 @@ class Schedule:
                 time, subject, group,room,count_student = schedule
                 list_s=[time,subject,group,room,count_student]
                 datas.append(list_s)
-        datas.sort(key=lambda x: x[0])  
-   
+        datas.sort(key=lambda x: x[0]) #сортируем одной лишь командой sort и лямбда. Очень удобно!!!
+
+
+#класс юзера 
 class Users:
     def __init__(self, name, password, email):
         self.name = name
         self.password = password
         self.email = email
 
-    def user_reg(self):
+    def user_reg(self): #функция регистрации нового акк. Связано с register frame
         username = self.name
         password = self.password
         email = self.email
@@ -102,14 +106,14 @@ class Users:
             messagebox.showinfo("Успех","Вы успешно создали аккаунт!")
     
 
-    def admin_users_log_pass_check(login,password):
-        import admin_log
+    def admin_users_log_pass_check(login,password): #проверка логина, пароля пользователя и так же email и пароля!
+        import admin_log #Быстро , удобно. 
         
         with open("data/users_data.txt", 'r') as file:
             for data in file:
                 data = data.strip()#метод строки, который удаляет пробелы в начале и в конце строки.
                 user_data = data.split(",")# разделяет очищенную строку на список элементов по запятым.
-                username, user_password, email = user_data #происходит распаковка списка или кортежа на несколько переменных.
+                username, user_password, email = user_data #происходит распаковка списка на несколько переменных.
                 if login == username and password == user_password:
                     user_acc_frame()
                     return
@@ -163,7 +167,7 @@ def user_acc_frame():
         tree.heading("count_student", text="Колл-студента")
         
     
-        def search_schedule():
+        def search_schedule(): #поиск расписания!
             info = search_entry.get().lower()  
             for row in tree.get_children():
                 tree.delete(row)  
@@ -179,7 +183,7 @@ def user_acc_frame():
 
 
     
-    def calendar_fr():
+    def calendar_fr(): #для кнопки календаря
         calendar_frame = Frame(user_frame,width=1270, height=750, bg="white")
         calendar_frame.place(x=65,y=55)
         Schedule.show_schedule()
@@ -210,7 +214,7 @@ def user_acc_frame():
         user_info_in_bg.place(x=0,y=0)
         user_info_in_bg.image = user_info_in
 
-    def sort_btn_funk():
+    def sort_btn_funk(): #сортировка нашиго расписание, сохраниние в лист datas и показ
         sorted_frame = Frame(user_frame, width=1270, height=750, bg="white")
         sorted_frame.place(x=65, y=55)
         Schedule.sorted_frame()
@@ -521,7 +525,7 @@ def admin_frame_win():
             cnt_student_change = ttk.Entry(edit_frame, style="Fancy.TButton")
             cnt_student_change.place(x=870, y=400, width=200, height=30)
 
-            # Функция для заполнения полей при выборе строки
+            # Функция для заполнения полей при выборе строки, делим по значением, время = 0 индекс, предмет = 1 индекс и т.д
             def select_item(event):
                 selected_item = tree.selection()[0]
                 values = tree.item(selected_item, 'values')
@@ -551,10 +555,10 @@ def admin_frame_win():
                 room = room_change.get()
                 cnt_student = cnt_student_change.get()
 
-                # Обновляем данные в списке
+                # Обновляем данные в списке datas
                 for i in range(len(datas)):
                     if datas[i][0] == tree.item(selected_item)['values'][0]:  # Поиск строки по времени
-                        datas[i] = [time, subject, group, room, cnt_student]  # Обновление данных
+                        datas[i] = [time, subject, group, room, cnt_student]  
                         Schedule.save_schedule()  
                         tree.item(selected_item, values=[time, subject, group, room, cnt_student])  # Обновление таблицы
                         break
