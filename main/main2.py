@@ -25,9 +25,9 @@ class Schedule:
 
 
     def show_schedule():
+        global datas
+        datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
-            global datas
-            datas.clear()
             for data in file:
                 data = data.strip()
                 schedule = data.split(",")
@@ -35,12 +35,12 @@ class Schedule:
                 list_s=[time,subject,group,room,count_student]
                 datas.append(list_s)
         
-            
+          
 
     def del_schedule():
+        global datas
+        datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
-            global datas
-            datas.clear()
             for data in file:
                 data = data.strip()
                 schedule = data.split(",")
@@ -50,9 +50,9 @@ class Schedule:
         
     
     def edit_schedule():
+        global datas    
+        datas.clear()
         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
-            global datas
-            datas.clear()
             for data in file:
                 data = data.strip()
                 schedule = data.split(",")
@@ -61,11 +61,23 @@ class Schedule:
                 datas.append(list_s)
 
 
-    def save_schedule():
+    def save_schedule():#после редоктирвания 
         with open("data/StudentSchedule.txt", 'w', encoding='utf-8') as file:
             for schedule in datas:
                 file.write(",".join(schedule) + "\n")
 
+   
+    def sorted_frame():
+        global datas    
+        datas.clear()
+        with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+            for data in file:
+                data = data.strip()
+                schedule = data.split(",")
+                time, subject, group,room,count_student = schedule
+                list_s=[time,subject,group,room,count_student]
+                datas.append(list_s)
+        datas.sort(key=lambda x: x[0])  
    
 class Users:
     def __init__(self, name, password, email):
@@ -426,7 +438,7 @@ def admin_frame_win():
                         Schedule.save_schedule()  
                         tree.item(selected_item, values=[time, subject, group, room, cnt_student])  # Обновление таблицы
                         break
-
+                messagebox.showinfo("Успех","Изменено!")
             change_btn = ttk.Button(edit_frame, text="Изменить!", style="Fancy.TButton", command=apply_changes)
             change_btn.place(x=870, y=460, width=200, height=30)
 
@@ -445,23 +457,72 @@ def admin_frame_win():
 
 
         def find_btn_funk():   
-            pass
+            style = ttk.Style()
+            style.configure("Fancy.TButton", foreground="black", background="red")
+            Schedule.show_schedule()
 
 
-        find_btn = Button(admin_frame, text="Поиск",command=find_btn_funk)
-        find_btn.config(padx=15,pady=14)
-        find_btn.place(x=540,y=65)
+            find_frame = Frame(admin_frame, width=1250, height=580, bg="#7545ff")
+            find_frame.place(x=67, y=120)
+            search_text = ttk.Label(find_frame,text="Введите название группы или название предмета!")
+            search_text.config(background="#7545ff",font=(("Arial"),13))
+            search_text.place(x=30,y=437)
+            search_entry = ttk.Entry(find_frame, style="Fancy.TButton")
+            search_entry.place(x=30, y=460, width=300, height=30)
+            columns = ("time", "subject", "group", "room", "count_student")
+            tree = ttk.Treeview(admin_frame, columns=columns, show="headings")
+            tree.place(x=100, y=140, width=1000, height=350)
+
+            tree.heading("time", text="Время")
+            tree.heading("subject", text="Предмет")
+            tree.heading("group", text="Группа")
+            tree.heading("room", text="Комната")
+            tree.heading("count_student", text="Колл-студента")
+            
         
+            def search_schedule():
+                info = search_entry.get().lower()  
+                for row in tree.get_children():
+                    tree.delete(row)  
+
+                
+                for item in datas:
+                    if info in item[1].lower() or info in item[2].lower():  # Проверяем в предмете и группе
+                        tree.insert("", END, values=item) 
+                        
+            find_Btn = ttk.Button(find_frame, text="Искать!", style="Fancy.TButton", command=search_schedule)
+            find_Btn.place(x=870, y=460, width=200, height=30)
+
+        # Кнопка "Поиск" на главном фрейме
+        find_btn = Button(admin_frame, text="Поиск", command=find_btn_funk)
+        find_btn.config(padx=15, pady=14)
+        find_btn.place(x=540, y=65)
+                
 
 
         def sort_btn_funk():
-            pass
+            sorted_frame = Frame(admin_frame, width=1250, height=580, bg="#7545ff")
+            sorted_frame.place(x=67, y=120)
+            Schedule.sorted_frame()
+            style = ttk.Style()
+            style.configure("Fancy.TButton", foreground="black", background="red")
+            columns = ("time", "subject", "group", "room", "count_student")
+            tree = ttk.Treeview(admin_frame, columns=columns, show="headings")
+            tree.place(x=100, y=140, width=1000, height=350)
+
+            tree.heading("time", text="Время")
+            tree.heading("subject", text="Предмет")
+            tree.heading("group", text="Группа")
+            tree.heading("room", text="Комната")
+            tree.heading("count_student", text="Колл-студента")
+            for info in datas:
+                tree.insert("", END, values=info)
 
 
         sort_btn = Button(admin_frame, text="Сортировка",command=sort_btn_funk)
         sort_btn.config(padx=15,pady=14)
         sort_btn.place(x=630,y=65)
-
+        
 
 
 
@@ -771,8 +832,8 @@ def main_view():
 
 
 
-admin_frame_win()
-# main_view()
+# admin_frame_win()
+main_view()
 mystat.mainloop()
 
 
