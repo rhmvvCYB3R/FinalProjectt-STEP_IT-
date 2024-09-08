@@ -1,3 +1,4 @@
-10:00,Python,Sama,5,15
+11:00,Python,Sama,5,15
 11:30,DevOps,Islam Tamayev,online,12
-13:00,C++,Alexander Pushkin,5d,13
+13:30,QA-TESTER,Asxab Tamayev,5d,14
+09:30,C++,Григорий Лепс,2,11

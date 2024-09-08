@@ -1,7 +1,8 @@
 from tkinter import *
 from PIL import Image, ImageTk #чтобы можно было добавить фотки
 import webbrowser #добавил чтобы мог управлять ссылками
-from tkinter import messagebox,ttk
+from tkinter import messagebox
+from tkinter import ttk 
 
 datas = []
 
@@ -37,7 +38,7 @@ class Schedule:
             
 
     def del_schedule():
-         with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+        with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
             global datas
             datas.clear()
             for data in file:
@@ -47,7 +48,24 @@ class Schedule:
                 list_s=[time,subject,group,room,count_student]
                 datas.append(list_s)
         
-         
+    
+    def edit_schedule():
+        with open("data/StudentSchedule.txt", 'r', encoding='utf-8') as file:
+            global datas
+            datas.clear()
+            for data in file:
+                data = data.strip()
+                schedule = data.split(",")
+                time, subject, group,room,count_student = schedule
+                list_s=[time,subject,group,room,count_student]
+                datas.append(list_s)
+
+
+    def save_schedule():
+        with open("data/StudentSchedule.txt", 'w', encoding='utf-8') as file:
+            for schedule in datas:
+                file.write(",".join(schedule) + "\n")
+
    
 class Users:
     def __init__(self, name, password, email):
@@ -154,7 +172,7 @@ def admin_frame_win():
     admin_frame.place(x=0, y=0)
 
     def calendar_add_frame():
-        calendar_frame = Frame(admin_frame, width=1250, height=800, bg="#694185")
+        calendar_frame = Frame(admin_frame, width=1250, height=800, bg="#7545ff")
         calendar_frame.place(x=67, y=100)
         
         design3 = Label(admin_frame)
@@ -168,7 +186,7 @@ def admin_frame_win():
 
          #SHOW_BUTTON_AND_FUNK______
         def show_btn_funk():
-            add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
+            add_frame = Frame(admin_frame, width=1250, height=580, bg="#7545ff")
             add_frame.place(x=67, y=120)
             Schedule.show_schedule()
 
@@ -201,7 +219,7 @@ def admin_frame_win():
 
         #___________ADD_BUTTON_AND_FUNK______
         def add_btn_frame():
-            add_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
+            add_frame = Frame(admin_frame, width=1250, height=580, bg="#7545ff")
             add_frame.place(x=67, y=120)
             #______________ENTRIES_________________
             time_add = Entry(add_frame)
@@ -227,23 +245,23 @@ def admin_frame_win():
 
             #______________TEXT_LABELS______________________________-
             time_add_text = Label(add_frame, text="--Время урока")
-            time_add_text.config(font=("Arial",16),bg="#694185",fg="white")
+            time_add_text.config(font=("Arial",16),bg="#7545ff",fg="white")
             time_add_text.place(x=300,y=50)
 
             subject_add_text = Label(add_frame, text="--Название предмета")
-            subject_add_text.config(font=("Arial",16),bg="#694185",fg="white")
+            subject_add_text.config(font=("Arial",16),bg="#7545ff",fg="white")
             subject_add_text.place(x=300,y=100)
 
             group_add_text = Label(add_frame, text="--Группа")
-            group_add_text.config(font=("Arial",16),bg="#694185",fg="white")
+            group_add_text.config(font=("Arial",16),bg="#7545ff",fg="white")
             group_add_text.place(x=300,y=150)
 
             room_add_text = Label(add_frame, text="--Комната")
-            room_add_text.config(font=("Arial",16),bg="#694185",fg="white")
+            room_add_text.config(font=("Arial",16),bg="#7545ff",fg="white")
             room_add_text.place(x=300,y=200)
 
             count_stn_text = Label(add_frame, text="--Колличество студентов")
-            count_stn_text.config(font=("Arial",16),bg="#694185",fg="white")
+            count_stn_text.config(font=("Arial",16),bg="#7545ff",fg="white")
             count_stn_text.place(x=300,y=250)
             
             
@@ -280,7 +298,7 @@ def admin_frame_win():
 
         #______DELETE_BUTTON_AND_FUNK______
         def delete_btn_funk():
-            delete_btn_frame = Frame(admin_frame, width=1250, height=580, bg="#694185")
+            delete_btn_frame = Frame(admin_frame, width=1250, height=580, bg="#7545ff")
             delete_btn_frame.place(x=67, y=120)
             Schedule.del_schedule()
             
@@ -298,8 +316,24 @@ def admin_frame_win():
             for info in datas:
                 tree.insert("", END, values=info)
             
-           
-            del_chosed_btn = Button(delete_btn_frame, text="Удалить выбранное!")
+            def delete_selected():
+                selected_item = tree.selection()
+                if selected_item:
+                    values = tree.item(selected_item)['values']
+                    time_to_delete = values[0]
+                    subject_to_delete = values[1]
+                    for data in datas:
+                        if data[0] == time_to_delete and data[1] == subject_to_delete:
+                            datas.remove(data)
+                            break
+                    
+                    with open("data/StudentSchedule.txt", 'w', encoding='utf-8') as file:
+                        for data in datas:
+                            file.write(",".join(data) + "\n")
+                    messagebox.showinfo("Успех","Успешно удалено!")
+                    tree.delete(selected_item)
+
+            del_chosed_btn = Button(delete_btn_frame, text="Удалить выбранное!",command=delete_selected)
             del_chosed_btn.config(padx=15,pady=14)
             del_chosed_btn.place(x=1040,y=467)     
            
@@ -318,8 +352,85 @@ def admin_frame_win():
         #________EDIT_BUTTON_AND_FUNK______
 
         def edit_btn_funk():
-            pass
+            style = ttk.Style()
+            style.configure("Fancy.TButton", foreground="black", background="red")
 
+            edit_frame = Frame(admin_frame, width=1250, height=580, bg="#7545ff")
+            edit_frame.place(x=67, y=120)
+
+            Schedule.edit_schedule()
+
+            columns = ("time", "subject", "group", "room", "count_student")
+            tree = ttk.Treeview(admin_frame, columns=columns, show="headings")
+            tree.place(x=100, y=140, width=1000, height=350)
+
+            tree.heading("time", text="Время")
+            tree.heading("subject", text="Предмет")
+            tree.heading("group", text="Группа")
+            tree.heading("room", text="Комната")
+            tree.heading("count_student", text="Колл-студента")
+            
+            for info in datas:
+                tree.insert("", END, values=info)
+
+            # Поля ввода для изменения данных
+            time_change = ttk.Entry(edit_frame, style="Fancy.TButton")
+            time_change.place(x=30, y=400, width=200, height=30)
+
+            subject_change = ttk.Entry(edit_frame, style="Fancy.TButton")
+            subject_change.place(x=240, y=400, width=200, height=30)
+
+            group_change = ttk.Entry(edit_frame, style="Fancy.TButton")
+            group_change.place(x=450, y=400, width=200, height=30)
+
+            room_change = ttk.Entry(edit_frame, style="Fancy.TButton")
+            room_change.place(x=660, y=400, width=200, height=30)
+
+            cnt_student_change = ttk.Entry(edit_frame, style="Fancy.TButton")
+            cnt_student_change.place(x=870, y=400, width=200, height=30)
+
+            # Функция для заполнения полей при выборе строки
+            def select_item(event):
+                selected_item = tree.selection()[0]
+                values = tree.item(selected_item, 'values')
+
+                time_change.delete(0, END)
+                time_change.insert(0, values[0])
+
+                subject_change.delete(0, END)
+                subject_change.insert(0, values[1])
+
+                group_change.delete(0, END)
+                group_change.insert(0, values[2])
+
+                room_change.delete(0, END)
+                room_change.insert(0, values[3])
+
+                cnt_student_change.delete(0, END)
+                cnt_student_change.insert(0, values[4])
+
+            tree.bind('<<TreeviewSelect>>', select_item)
+
+            def apply_changes():
+                selected_item = tree.selection()[0]
+                time = time_change.get()
+                subject = subject_change.get()
+                group = group_change.get()
+                room = room_change.get()
+                cnt_student = cnt_student_change.get()
+
+                # Обновляем данные в списке
+                for i in range(len(datas)):
+                    if datas[i][0] == tree.item(selected_item)['values'][0]:  # Поиск строки по времени
+                        datas[i] = [time, subject, group, room, cnt_student]  # Обновление данных
+                        Schedule.save_schedule()  
+                        tree.item(selected_item, values=[time, subject, group, room, cnt_student])  # Обновление таблицы
+                        break
+
+            change_btn = ttk.Button(edit_frame, text="Изменить!", style="Fancy.TButton", command=apply_changes)
+            change_btn.place(x=870, y=460, width=200, height=30)
+
+                    
 
         edit_btn = Button(admin_frame, text="Редактировать",command=edit_btn_funk)
         edit_btn.config(padx=15,pady=14)
@@ -361,43 +472,43 @@ def admin_frame_win():
 
     #________ADMIN_FRAME_VIEWS
     design1 = Label(admin_frame)
-    design1.config(bg='#D3D3D3',padx=700,pady=20)
+    design1.config(bg='#7545ff',padx=700,pady=20)
     design1.place(x=0,y=0) 
 
     design2 = Label(admin_frame)
-    design2.config(bg='#D3D3D3',padx=30,pady=500)
+    design2.config(bg='#7545ff',padx=32,pady=500)
     design2.place(x=0,y=0)
 
     calendar_add =Image.open("files/calendar_add.png")
     resized_calendar_add_in = calendar_add.resize((55, 55))
     calendar_add_in = ImageTk.PhotoImage(resized_calendar_add_in)
-    calendar_add_in_bg = Button(admin_frame, image=calendar_add_in, bd=0, bg = '#D3D3D3', command=calendar_add_frame)
-    calendar_add_in_bg.place(x=5,y=200)
+    calendar_add_in_bg = Button(admin_frame, image=calendar_add_in, bd=0, bg = '#7545ff', command=calendar_add_frame)
+    calendar_add_in_bg.place(x=7,y=200)
     calendar_add_in_bg.image = calendar_add_in# Сохраняем ссылку на изображение
 
     admin_text = Label(admin_frame, text='admin')
-    admin_text.config(bg='#D3D3D3',
-                        fg='#563bea',
+    admin_text.config(bg='#7545ff',
+                        fg='#2e0b93',
                     font= ("Ubuntu" , 13),bd=0)
     admin_text.place(x=85,y=35)
 
     mystat_text = Label(admin_frame, text='MyStat')
-    mystat_text.config(bg='#D3D3D3',
-                        fg='#563bea',
+    mystat_text.config(bg='#7545ff',
+                        fg='#2e0b93',
                     font= ("Arial Black" , 14),bd=0)
     mystat_text.place(x=75,y=9)
 
     step_logo =Image.open("files/step_logo2.png")
     resized_step_logo_in = step_logo.resize((60, 75))
     step_logo_in = ImageTk.PhotoImage(resized_step_logo_in)
-    step_logo_in_bg = Button(admin_frame, image=step_logo_in, bd=0, bg = '#D3D3D3',command=admin_frame_win )
+    step_logo_in_bg = Button(admin_frame, image=step_logo_in, bd=0, bg = '#7545ff',command=admin_frame_win )
     step_logo_in_bg.place(x=0,y=0)
     step_logo_in_bg.image = step_logo_in# Сохраняем ссылку на изображение
     
     admin_logo =Image.open("files/admin_anonim.png")
     resized_admin_logo_in = admin_logo.resize((55, 55))
     admin_logo_in = ImageTk.PhotoImage(resized_admin_logo_in)
-    admin_logo_in_bg = Button(admin_frame, image=admin_logo_in, bd=0, bg = '#D3D3D3',command=admin_frame_win )
+    admin_logo_in_bg = Button(admin_frame, image=admin_logo_in, bd=0, bg = '#7545ff',command=admin_frame_win )
     admin_logo_in_bg.place(x=5,y=95)
     admin_logo_in_bg.image = admin_logo_in# Сохраняем ссылку на изображение
 
@@ -409,7 +520,7 @@ def admin_frame_win():
     quit_btn =Image.open("files/exitbtn.png")
     resized_quit_btn_in = quit_btn.resize((35, 35))
     quit_btn_in = ImageTk.PhotoImage(resized_quit_btn_in)
-    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#D3D3D3',command=go_back_btn_funk )
+    quit_btn_in_btn = Button(admin_frame, image=quit_btn_in, bd=0, bg = '#7545ff',command=go_back_btn_funk )
     quit_btn_in_btn.place(x=1220,y=15)
     quit_btn_in_btn.image = quit_btn_in# Сохраняем ссылку на изображение
 #______________ADMIN_FRAME_VIEWS_END________________
